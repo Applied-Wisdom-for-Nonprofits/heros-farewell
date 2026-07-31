@@ -51,14 +51,28 @@
 
     root.innerHTML = `
       <section class="panel cover">
-        <div class="cover-mark" aria-hidden="true"></div>
-        <h1>${book.title}</h1>
-        <p class="cover-sub">${book.subtitle}</p>
-        <p class="cover-by">${book.author}</p>
-        <p class="cover-note">${book.note}</p>
-        <div class="cover-actions">
-          <a class="btn btn-primary" href="#/chapter/1">Begin with Chapter 1</a>
-          <a class="btn btn-ghost" href="#/chapter/5">Skip to the four exit styles</a>
+        <div class="cover-intro">
+          <figure class="cover-art">
+            <img
+              src="assets/heros-farewell-editorial-cover.webp"
+              alt="Editorial ink sketch of The Hero's Farewell book cover, showing an older executive writing"
+              width="1000"
+              height="1573"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </figure>
+          <div class="cover-copy">
+            <div class="cover-mark" aria-hidden="true"></div>
+            <h1>${book.title}</h1>
+            <p class="cover-sub">${book.subtitle}</p>
+            <p class="cover-by">${book.author}</p>
+            <p class="cover-note">${book.note}</p>
+            <div class="cover-actions">
+              <a class="btn btn-primary" href="#/chapter/1">Begin with Chapter 1</a>
+              <a class="btn btn-ghost" href="#/chapter/5">Skip to the four exit styles</a>
+            </div>
+          </div>
         </div>
         <div class="types">
           <h2>Four ways leaders leave</h2>
