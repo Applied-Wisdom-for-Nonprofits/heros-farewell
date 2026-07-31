@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Hero's Farewell — Reading Companion</title>
+    <meta
+      name="description"
+      content="A chapter-by-chapter reading companion for Jeffrey Sonnenfeld's The Hero's Farewell."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,550&family=Source+Serif+4:opsz,ital,wght@8..60,0,400;8..60,0,500;8..60,1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="mobile-bar">
+      <button type="button" id="toc-toggle" aria-label="Open table of contents">
+        Contents
+      </button>
+      <span id="mobile-title">The Hero's Farewell</span>
+    </div>
+
+    <div class="app">
+      <aside class="sidebar" aria-label="Table of contents">
+        <a class="brand" href="#/">
+          <span class="brand-kicker">Reading companion</span>
+          <span class="brand-title">The Hero's Farewell</span>
+        </a>
+        <div class="toc-label">Contents</div>
+        <ol class="toc" id="toc"></ol>
+        <p class="sidebar-foot">
+          Key concepts by chapter.<br />
+          ← → to move between pages.
+        </p>
+      </aside>
+
+      <main class="main">
+        <div id="view"></div>
+      </main>
+    </div>
+
+    <div class="backdrop" id="backdrop"></div>
+
+    <script src="chapters.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
