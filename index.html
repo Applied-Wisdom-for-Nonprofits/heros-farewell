@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>The Hero's Farewell — Reading Companion</title>
     <meta
       name="description"
@@ -19,23 +22,34 @@
   </head>
   <body>
     <div class="mobile-bar">
-      <button type="button" id="toc-toggle" aria-label="Open table of contents">
+      <button
+        type="button"
+        id="toc-toggle"
+        aria-label="Open table of contents"
+        aria-controls="sidebar"
+        aria-expanded="false"
+      >
         Contents
       </button>
       <span id="mobile-title">The Hero's Farewell</span>
     </div>
 
     <div class="app">
-      <aside class="sidebar" aria-label="Table of contents">
+      <aside class="sidebar" id="sidebar" aria-label="Table of contents">
         <a class="brand" href="#/">
           <span class="brand-kicker">Reading companion</span>
           <span class="brand-title">The Hero's Farewell</span>
         </a>
-        <div class="toc-label">Contents</div>
+        <div class="sidebar-heading">
+          <div class="toc-label">Table of contents</div>
+          <button type="button" class="toc-close" id="toc-close" aria-label="Close table of contents">
+            Close
+          </button>
+        </div>
         <ol class="toc" id="toc"></ol>
         <p class="sidebar-foot">
-          Key concepts by chapter.<br />
-          ← → to move between pages.
+          <span class="desktop-hint">Key concepts by chapter.<br />← → to move between pages.</span>
+          <span class="mobile-hint">Choose a chapter to continue reading.</span>
         </p>
       </aside>
 

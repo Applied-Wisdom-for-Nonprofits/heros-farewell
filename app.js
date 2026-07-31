@@ -1,6 +1,8 @@
 (function () {
   const root = document.getElementById("view");
   const tocEl = document.getElementById("toc");
+  const tocToggle = document.getElementById("toc-toggle");
+  const tocClose = document.getElementById("toc-close");
   const book = window.BOOK;
 
   function parseRoute() {
@@ -25,6 +27,22 @@
 
   function closeSidebar() {
     document.body.classList.remove("sidebar-open");
+    tocToggle?.setAttribute("aria-expanded", "false");
+  }
+
+  function openSidebar() {
+    document.body.classList.add("sidebar-open");
+    tocToggle?.setAttribute("aria-expanded", "true");
+    window.requestAnimationFrame(() => tocClose?.focus());
+  }
+
+  function toggleSidebar() {
+    if (document.body.classList.contains("sidebar-open")) {
+      closeSidebar();
+      tocToggle?.focus();
+    } else {
+      openSidebar();
+    }
   }
 
   function renderToc() {
@@ -69,8 +87,7 @@
             <p class="cover-by">${book.author}</p>
             <p class="cover-note">${book.note}</p>
             <div class="cover-actions">
-              <a class="btn btn-primary" href="#/chapter/1">Begin with Chapter 1</a>
-              <a class="btn btn-ghost" href="#/chapter/5">Skip to the four exit styles</a>
+              <a class="btn btn-primary" href="#/chapter/1">Start reading</a>
             </div>
           </div>
         </div>
@@ -118,6 +135,9 @@
       ? `<a class="next" href="#/chapter/${next.id}"><span class="dir">Next</span>${next.title}</a>`
       : `<a class="next" href="#/"><span class="dir">Next</span>Back to cover</a>`;
 
+    const mobilePrevHref = prev ? `#/chapter/${prev.id}` : "#/";
+    const mobileNextHref = next ? `#/chapter/${next.id}` : "#/";
+
     const visualsBlock = visuals
       ? `<section class="chapter-visuals" aria-label="Chapter visuals">
           <h2 class="summary-label">Visuals</h2>
@@ -143,13 +163,28 @@
           ${prevLink}
           ${nextLink}
         </nav>
-      </article>`;
+      </article>
+      <nav class="mobile-reader-nav" aria-label="Mobile chapter navigation">
+          <a href="${mobilePrevHref}" aria-label="Previous: ${prev ? prev.title : "Cover and overview"}">
+            <span aria-hidden="true">←</span>
+            <span>Previous</span>
+          </a>
+          <button type="button" data-open-toc aria-label="Open table of contents">
+            <span>Contents</span>
+            <small>${chapter.id} of ${book.chapters.length}</small>
+          </button>
+          <a href="${mobileNextHref}" aria-label="Next: ${next ? next.title : "Back to cover"}">
+            <span>Next</span>
+            <span aria-hidden="true">→</span>
+          </a>
+      </nav>`;
   }
 
   function render() {
     const route = parseRoute();
     if (route.name === "chapter") renderChapter(route.id);
     else renderHome();
+    document.body.classList.toggle("reader-chapter", route.name === "chapter");
     setActiveToc(route);
     closeSidebar();
     window.scrollTo(0, 0);
@@ -167,6 +202,11 @@
 
   function onKey(e) {
     if (e.target.matches("input, textarea")) return;
+    if (e.key === "Escape" && document.body.classList.contains("sidebar-open")) {
+      closeSidebar();
+      tocToggle?.focus();
+      return;
+    }
     const route = parseRoute();
     if (e.key === "ArrowRight") {
       if (route.name === "home") location.hash = "#/chapter/1";
@@ -183,8 +223,16 @@
   window.addEventListener("hashchange", render);
   window.addEventListener("keydown", onKey);
 
-  document.getElementById("toc-toggle")?.addEventListener("click", () => {
-    document.body.classList.toggle("sidebar-open");
+  tocToggle?.addEventListener("click", toggleSidebar);
+  tocClose?.addEventListener("click", () => {
+    closeSidebar();
+    tocToggle?.focus();
   });
-  document.getElementById("backdrop")?.addEventListener("click", closeSidebar);
+  document.getElementById("backdrop")?.addEventListener("click", () => {
+    closeSidebar();
+    tocToggle?.focus();
+  });
+  root.addEventListener("click", (event) => {
+    if (event.target.closest("[data-open-toc]")) openSidebar();
+  });
 })();
